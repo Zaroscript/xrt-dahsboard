@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Admin Dashboard Design System
+   Gold (#d3b073) + Dark (#232325) Theme with Glass Morphism
+   All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Scrollbar variables for light theme */
+    --scrollbar-track: hsl(0 0% 98%);
+    --scrollbar-thumb: hsl(41 61% 64%);
+    --scrollbar-thumb-hover: hsl(41 70% 58%);
+
+    /* Light theme - Clean white with gold accents */
+    --background: 0 0% 100%;
+    --foreground: 222 24% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 24% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 24% 15%;
+
+    /* Gold primary color - sophisticated and premium */
+    --primary: 41 61% 64%;
+    --primary-foreground: 222 24% 15%;
+
+    /* Glass secondary with subtle transparency */
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222 24% 15%;
+
+    /* Muted tones for subtle backgrounds */
+    --muted: 210 40% 98%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Gold accent variations */
+    --accent: 41 61% 64%;
+    --accent-foreground: 222 24% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 24% 15%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 41 61% 64%;
+
+    --radius: 0.75rem;
+
+    /* Custom dashboard colors */
+    --gold-50: 41 100% 96%;
+    --gold-100: 41 88% 89%;
+    --gold-200: 41 84% 78%;
+    --gold-300: 41 77% 67%;
+    --gold-400: 41 70% 58%;
+    --gold-500: 41 61% 64%;
+    --gold-600: 41 55% 50%;
+    --gold-700: 41 49% 40%;
+    --gold-800: 41 43% 32%;
+    --gold-900: 41 37% 24%;
+
+    /* Glass morphism effects */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 41 61% 64% / 0.2;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(41 61% 64% / 0.9), hsl(41 70% 58% / 0.7));
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.9), hsl(0 0% 100% / 0.6));
+    
+    /* Shadows */
+    --shadow-gold: 0 10px 30px -5px hsl(41 61% 64% / 0.3);
+    --shadow-elegant: 0 4px 20px -2px hsl(222 24% 15% / 0.1);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme - Deep dark (#232325) with gold highlights */
+    --scrollbar-track: hsl(240 5% 15%);
+    --scrollbar-thumb: hsl(41 61% 64% / 0.7);
+    --scrollbar-thumb-hover: hsl(41 61% 64%);
+    
+    --background: 222 6% 14%;
+    --foreground: 210 40% 98%;
+    --card: 222 8% 16%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 8% 16%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 41 61% 64%;
+    --primary-foreground: 222 6% 14%;
+    --secondary: 222 8% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 8% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 41 61% 64%;
+    --accent-foreground: 222 6% 14%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 6% 14%;
+    --border: 222 8% 18%;
+    --input: 222 8% 18%;
+    --ring: 41 61% 64%;
+    --glass-bg: 222 8% 16% / 0.8;
+    --glass-border: 41 61% 64% / 0.3;
+    --gradient-gold: linear-gradient(135deg, hsl(41 61% 64% / 0.9), hsl(41 70% 58% / 0.7));
+    --gradient-glass: linear-gradient(135deg, hsl(222 8% 16% / 0.9), hsl(222 8% 16% / 0.6));
+    --shadow-gold: 0 10px 30px -5px hsl(41 61% 64% / 0.4);
+    --shadow-elegant: 0 4px 20px -2px hsl(222 6% 14% / 0.3);
+    --sidebar-background: 222 8% 12%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 41 61% 64%;
+    --sidebar-primary-foreground: 222 6% 14%;
+    --sidebar-accent: 222 8% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 8% 18%;
+    --sidebar-ring: 41 61% 64%;
+  }
+
+  /* Global scrollbar styles */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.2s ease;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Glass morphism cards */
+  .glass-card {
+    @apply backdrop-blur-lg bg-card/80 border border-primary/20 rounded-xl shadow-lg;
+  }
+  
+  .glass-card-hover {
+    @apply glass-card hover:shadow-xl hover:border-primary/30 transition-all duration-300;
+  }
+
+  /* Gold gradient backgrounds */
+  .bg-gold-gradient {
+    background: var(--gradient-gold);
+  }
+  
+  .bg-glass-gradient {
+    background: var(--gradient-glass);
+  }
+
+  /* Modern shadows */
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  /* Smooth animations */
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    @apply animate-spin rounded-full border-2 border-primary/20 border-t-primary;
+  }
+}
+
+@layer utilities {
+  /* Custom transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
