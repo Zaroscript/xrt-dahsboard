@@ -38,7 +38,8 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { profileApi } from "@/services/api/profileApi";
 import { uploadMyAvatar, deleteMyAvatar } from "@/services/api/avatarApi";
-import { companySettingsApi, type CompanySettings } from "@/services/api/companySettingsApi";
+import { companySettingsApi, CompanySettings } from "@/services/api/companySettingsApi";
+import { getLogoUrl } from "@/utils/logoUtils";
 import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
@@ -161,8 +162,7 @@ const Settings = () => {
       setCompanySettings(settings);
       // Set logo preview if logo exists
       if (settings.logo) {
-        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        setLogoPreview(settings.logo.startsWith('http') ? settings.logo : `${baseUrl}${settings.logo}`);
+        setLogoPreview(getLogoUrl(settings.logo));
       }
     } catch (error: any) {
       console.error('Error fetching company settings:', error);
@@ -212,8 +212,7 @@ const Settings = () => {
       setCompanySettings({ ...companySettings, logo: logoPath });
       
       // Update preview
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      setLogoPreview(logoPath.startsWith('http') ? logoPath : `${baseUrl}${logoPath}`);
+      setLogoPreview(getLogoUrl(logoPath));
       
       toast({
         title: "Logo uploaded",

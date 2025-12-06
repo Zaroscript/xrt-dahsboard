@@ -93,6 +93,7 @@ import {
 import ViewInvoice from "@/components/invoices/ViewInvoice";
 import { SendInvoiceDialog } from "@/components/invoices/SendInvoiceDialog";
 import { companySettingsApi } from "@/services/api/companySettingsApi";
+import { getLogoUrl, convertToDataUrl } from "@/utils/logoUtils";
 
 // ViewInvoice is imported from @/components/invoices/ViewInvoice
 
@@ -350,6 +351,22 @@ const Invoices = () => {
         footer: { marginTop: 40, paddingTop: 20, borderTop: "1 solid #e2e8f0" },
       });
 
+      // Test logo accessibility
+      const testLogoAccess = async () => {
+        const logoUrl = getLogoUrl(companySettings.logo);
+        if (logoUrl) {
+          try {
+            const response = await fetch(logoUrl, { method: 'HEAD' });
+            console.log('Logo accessibility test:', response.status, response.ok);
+          } catch (error) {
+            console.error('Logo accessibility test failed:', error);
+          }
+        }
+      };
+
+      // Test the logo URL before generating PDF
+      await testLogoAccess();
+
       // Little helper functions for formatting
       const formatCurrency = (amount: number) =>
         new Intl.NumberFormat("en-US", {
@@ -368,14 +385,47 @@ const Invoices = () => {
         typeof client === "string" ? client : (client as InvoiceClient)?.companyName || "N/A";
 
       // Let's create the PDF
-      const InvoicePDF = () => (
-        <Document>
-          <Page size="A4" style={styles.page}>
-            {/* Header */}
-            <View style={styles.header}>
-              <View>
-                {companySettings.logo && (
-                  <Image src={companySettings.logo} style={styles.logo} />
+      const InvoicePDF = async () => {
+        // Debug logo information
+        console.log('Company Settings:', companySettings);
+        console.log('Logo path:', companySettings.logo);
+        const logoUrl = getLogoUrl(companySettings.logo);
+        console.log('Generated logo URL:', logoUrl);
+        
+        // Convert logo to data URL for PDF compatibility
+        let logoDataUrl: string | undefined;
+        if (logoUrl) {
+          try {
+            logoDataUrl = await convertToDataUrl(logoUrl);
+            console.log('Logo data URL:', logoDataUrl ? 'Generated successfully' : 'Failed to generate');
+            console.log('Data URL length:', logoDataUrl?.length || 0);
+          } catch (error) {
+            console.error('Error converting logo to data URL:', error);
+            logoDataUrl = undefined;
+          }
+        }
+        
+        // Always show the logo if we have either the original URL or data URL
+        const shouldShowLogo = companySettings.logo && (logoDataUrl || logoUrl);
+        console.log('Should show logo:', shouldShowLogo, 'Has data URL:', !!logoDataUrl, 'Has URL:', !!logoUrl);
+        
+        return (
+          <Document>
+            <Page size="A4" style={styles.page}>
+              {/* Header */}
+              <View style={styles.header}>
+                <View>
+                {shouldShowLogo ? (
+                  <Image 
+                    src={logoDataUrl || logoUrl} 
+                    style={styles.logo}
+                  />
+                ) : (
+                  <View style={styles.logo}>
+                    <Text style={{ fontSize: 12, color: "#64748b" }}>
+                      {companySettings.companyName || "LOGO"}
+                    </Text>
+                  </View>
                 )}
               </View>
               <View style={styles.companyInfo}>
@@ -541,11 +591,13 @@ const Invoices = () => {
             </View>
           </Page>
         </Document>
-      );
+        );
+      };
 
-      // Generate and download PDF
-      const blob = await pdf(<InvoicePDF />).toBlob();
-      const url = window.URL.createObjectURL(blob);
+      // Generate PDF blob
+      const invoicePdfElement = await InvoicePDF();
+      const blob = await pdf(invoicePdfElement).toBlob();
+      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = `invoice-${invoice.invoiceNumber || "details"}.pdf`;

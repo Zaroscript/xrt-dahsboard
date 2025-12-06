@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 import { getInvoices, downloadInvoice } from "@/services/invoiceService";
 import { companySettingsApi } from "@/services/api/companySettingsApi";
+import { getLogoUrl } from "@/utils/logoUtils";
 import { Invoice } from "@/types/invoice.types";
 import ViewInvoice from "@/components/invoices/ViewInvoice";
 import { pdf } from "@react-pdf/renderer";
@@ -239,9 +240,23 @@ export function ClientInvoicesCard({ clientId }: ClientInvoicesCardProps) {
             {/* Header */}
             <View style={styles.header}>
               <View>
-                {companySettings.logo && (
-                  <Image src={companySettings.logo} style={styles.logo} />
-                )}
+                {(() => {
+                  const logoUrl = getLogoUrl(companySettings.logo);
+                  console.log('ClientInvoicesCard - Logo path:', companySettings.logo);
+                  console.log('ClientInvoicesCard - Logo URL:', logoUrl);
+                  return companySettings.logo && logoUrl ? (
+                    <Image 
+                      src={logoUrl} 
+                      style={styles.logo}
+                    />
+                  ) : (
+                    <View style={styles.logo}>
+                      <Text style={{ fontSize: 12, color: "#64748b" }}>
+                        {companySettings.companyName || "LOGO"}
+                      </Text>
+                    </View>
+                  );
+                })()}
               </View>
               <View style={styles.companyInfo}>
                 <Text style={styles.companyName}>
