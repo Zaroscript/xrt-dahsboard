@@ -20,7 +20,7 @@ export function useServices() {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch('/api/v1/services', {
+      const response = await fetch('/services', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
